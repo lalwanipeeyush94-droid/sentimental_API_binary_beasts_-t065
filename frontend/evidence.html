@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SentinelAPI | Evidence</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Sentinel<span>API</span>
+</div>
+
+<nav class="nav">
+
+<a href="index.html">Dashboard</a>
+<a href="new-scan.html">New Scan</a>
+<a href="findings.html">Findings</a>
+<a href="evidence.html">Evidence</a>
+<a href="agent.html">Agent Trace</a>
+<a href="reports.html">Reports</a>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<div class="mobile-header">
+
+<strong>SentinelAPI</strong>
+
+<button class="mobile-menu">☰</button>
+
+</div>
+
+<div class="topbar">
+
+<div>
+
+<div class="page-title">
+Authorization Evidence
+</div>
+
+<div class="page-subtitle">
+Counterfactual identity comparison
+</div>
+
+</div>
+
+</div>
+
+<div id="evidenceContainer">
+
+<div class="loading">
+Loading authorization probes...
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+async function loadEvidence() {
+
+    try {
+
+        const data =
+            await getProbes();
+
+        const probes =
+            getArray(data);
+
+        const container =
+            document.getElementById("evidenceContainer");
+
+        if (!probes.length) {
+
+            container.innerHTML = `
+
+                <div class="card empty">
+                    No authorization probes found.
+                </div>
+
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            probes
+            .slice()
+            .reverse()
+            .map(probe => {
+
+                const vulnerable =
+                    probe.status_code_a === 200 &&
+                    probe.status_code_b === 200;
+
+                return `
+
+                <div class="card section">
+
+                    <div class="finding">
+
+                        <div>
+
+                            <div class="finding-title">
+
+                                ${
+                                    vulnerable
+                                        ? "BOLA CONFIRMED"
+                                        : "Authorization Test"
+                                }
+
+                            </div>
+
+                            <div class="finding-path">
+                                Endpoint #${escapeHTML(probe.endpoint_id)}
+                            </div>
+
+                        </div>
+
+                        <span class="badge ${
+                            vulnerable
+                                ? "high"
+                                : "confirmed"
+                        }">
+
+                            ${
+                                vulnerable
+                                    ? "HIGH"
+                                    : "NO BOLA"
+                            }
+
+                        </span>
+
+                    </div>
+
+                    <br>
+
+                    <div class="evidence-grid">
+
+                        <div class="identity">
+
+                            <div class="identity-title">
+                                Owner Identity
+                            </div>
+
+                            <p>
+                                ${escapeHTML(
+                                    probe.identity_a || "—"
+                                )}
+                            </p>
+
+                            <br>
+
+                            <div class="status">
+                                ${escapeHTML(
+                                    probe.status_code_a ?? "—"
+                                )}
+                            </div>
+
+                            <span class="muted">
+                                HTTP Status
+                            </span>
+
+                        </div>
+
+                        <div class="identity">
+
+                            <div class="identity-title">
+                                Test Identity
+                            </div>
+
+                            <p>
+                                ${escapeHTML(
+                                    probe.identity_b || "—"
+                                )}
+                            </p>
+
+                            <br>
+
+                            <div class="status">
+                                ${escapeHTML(
+                                    probe.status_code_b ?? "—"
+                                )}
+                            </div>
+
+                            <span class="muted">
+                                HTTP Status
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                `;
+
+            })
+            .join("");
+
+    } catch (error) {
+
+        document.getElementById(
+            "evidenceContainer"
+        ).innerHTML = `
+
+            <div class="card error">
+
+                ${escapeHTML(error.message)}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+loadEvidence();
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SentinelAPI | Agent</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Sentinel<span>API</span>
+</div>
+
+<nav class="nav">
+
+<a href="index.html">Dashboard</a>
+<a href="new-scan.html">New Scan</a>
+<a href="findings.html">Findings</a>
+<a href="evidence.html">Evidence</a>
+<a href="agent.html">Agent Trace</a>
+<a href="reports.html">Reports</a>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<div class="mobile-header">
+
+<strong>SentinelAPI</strong>
+
+<button class="mobile-menu">☰</button>
+
+</div>
+
+<div class="topbar">
+
+<div>
+
+<div class="page-title">
+Agent Execution Trace
+</div>
+
+<div class="page-subtitle">
+Bounded zero-trust test orchestration
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="form-group">
+
+<label>
+Scan ID
+</label>
+
+<input
+id="scanId"
+placeholder="Enter scan ID"
+>
+
+</div>
+
+<br>
+
+<button
+class="btn"
+onclick="loadTrace()"
+>
+Load Trace
+</button>
+
+</div>
+
+<div class="section">
+
+<div
+id="trace"
+class="trace"
+>
+
+<div class="card loading">
+Enter a scan ID.
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+const params =
+    new URLSearchParams(window.location.search);
+
+const scanFromURL =
+    params.get("scan");
+
+if (scanFromURL) {
+
+    document.getElementById("scanId").value =
+        scanFromURL;
+
+    loadTrace();
+
+}
+
+async function loadTrace() {
+
+    const scanId =
+        document.getElementById("scanId").value.trim();
+
+    if (!scanId) {
+        return;
+    }
+
+    const container =
+        document.getElementById("trace");
+
+    container.innerHTML = `
+        <div class="card loading">
+            Loading agent trace...
+        </div>
+    `;
+
+    try {
+
+        const data =
+            await getAgentTrace(scanId);
+
+        const traces =
+            getArray(data);
+
+        if (!traces.length) {
+
+            container.innerHTML = `
+                <div class="card empty">
+                    No agent trace found for scan #${escapeHTML(scanId)}.
+                </div>
+            `;
+
+            return;
+        }
+
+        container.innerHTML =
+            traces
+            .map(item => `
+
+                <div class="trace-item">
+
+                    <div class="trace-step">
+
+                        STEP ${escapeHTML(item.step ?? "")}
+                        •
+                        ${escapeHTML(item.phase || "UNKNOWN")}
+
+                    </div>
+
+                    <div class="trace-action">
+
+                        ${escapeHTML(
+                            item.action || "ACTION"
+                        )}
+
+                    </div>
+
+                    <div class="trace-text">
+
+                        ${
+                            escapeHTML(
+                                item.observation || ""
+                            )
+                        }
+
+                    </div>
+
+                    ${
+                        item.decision
+                            ? `
+                                <div class="trace-text">
+                                    Decision:
+                                    ${escapeHTML(item.decision)}
+                                </div>
+                              `
+                            : ""
+                    }
+
+                    ${
+                        item.result
+                            ? `
+                                <div class="trace-text">
+                                    Result:
+                                    ${escapeHTML(item.result)}
+                                </div>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+            `)
+            .join("");
+
+    } catch (error) {
+
+        container.innerHTML = `
+
+            <div class="card error">
+
+                ${escapeHTML(error.message)}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>

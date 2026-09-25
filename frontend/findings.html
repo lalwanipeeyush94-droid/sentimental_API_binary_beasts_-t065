@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SentinelAPI | Findings</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+
+<div class="logo">
+Sentinel<span>API</span>
+</div>
+
+<nav class="nav">
+
+<a href="index.html">Dashboard</a>
+<a href="new-scan.html">New Scan</a>
+<a href="findings.html">Findings</a>
+<a href="evidence.html">Evidence</a>
+<a href="agent.html">Agent Trace</a>
+<a href="reports.html">Reports</a>
+
+</nav>
+
+</aside>
+
+<main class="main">
+
+<div class="mobile-header">
+
+<strong>SentinelAPI</strong>
+
+<button class="mobile-menu">☰</button>
+
+</div>
+
+<div class="topbar">
+
+<div>
+
+<div class="page-title">
+Security Findings
+</div>
+
+<div class="page-subtitle">
+Evidence-backed authorization findings
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+<th>Vulnerability</th>
+<th>Endpoint</th>
+<th>Severity</th>
+<th>Confirmed</th>
+<th>Scan</th>
+
+</tr>
+
+</thead>
+
+<tbody id="findingsTable">
+
+<tr>
+<td colspan="6" class="loading">
+Loading findings...
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+async function loadFindings() {
+
+    try {
+
+        const data =
+            await getFindings();
+
+        const findings =
+            getArray(data);
+
+        const table =
+            document.getElementById("findingsTable");
+
+        if (!findings.length) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="6" class="empty">
+                        No findings detected.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        table.innerHTML =
+            findings
+            .slice()
+            .reverse()
+            .map(finding => {
+
+                const severity =
+                    (finding.severity || "INFO").toLowerCase();
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            #${escapeHTML(finding.id)}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                finding.vulnerability_type || "Unknown"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                finding.title ||
+                                finding.description ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+
+                            <span class="badge ${severity}">
+                                ${escapeHTML(
+                                    finding.severity || "INFO"
+                                )}
+                            </span>
+
+                        </td>
+
+                        <td>
+
+                            ${
+                                finding.confirmed
+                                    ? `<span class="badge confirmed">
+                                         CONFIRMED
+                                       </span>`
+                                    : `<span class="badge low">
+                                         NOT CONFIRMED
+                                       </span>`
+                            }
+
+                        </td>
+
+                        <td>
+                            #${escapeHTML(finding.scan_id)}
+                        </td>
+
+                    </tr>
+
+                `;
+
+            })
+            .join("");
+
+    } catch (error) {
+
+        document.getElementById("findingsTable").innerHTML = `
+
+            <tr>
+
+                <td colspan="6" class="error">
+
+                    ${escapeHTML(error.message)}
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+loadFindings();
+
+</script>
+
+</body>
+
+</html>

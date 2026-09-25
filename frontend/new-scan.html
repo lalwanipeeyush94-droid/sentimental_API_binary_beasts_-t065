@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SentinelAPI | New Scan</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Sentinel<span>API</span>
+        </div>
+
+        <nav class="nav">
+
+            <a href="index.html">
+                Dashboard
+            </a>
+
+            <a href="new-scan.html">
+                New Scan
+            </a>
+
+            <a href="findings.html">
+                Findings
+            </a>
+
+            <a href="evidence.html">
+                Evidence
+            </a>
+
+            <a href="agent.html">
+                Agent Trace
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="mobile-header">
+
+            <strong>
+                SentinelAPI
+            </strong>
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+        </div>
+
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="page-title">
+                    New Security Scan
+                </div>
+
+                <div class="page-subtitle">
+                    Configure an authorized zero-trust API assessment
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="scanAlert"
+            class="alert"
+        ></div>
+
+
+        <!-- OPENAPI -->
+
+        <div class="card">
+
+            <div class="section-title">
+                API Specification
+            </div>
+
+
+            <div class="upload">
+
+                <div class="upload-title">
+                    Upload OpenAPI Specification
+                </div>
+
+                <div class="upload-text">
+                    JSON / YAML supported
+                </div>
+
+                <input
+                    type="file"
+                    id="openapiFile"
+                    accept=".json,.yaml,.yml"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- CONFIGURATION -->
+
+        <div class="card section">
+
+            <div class="section-title">
+                Scan Configuration
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Authorized Target
+                    </label>
+
+                    <input
+                        id="target"
+                        value="http://127.0.0.1:8002"
+                        placeholder="http://127.0.0.1:8002"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        OpenAPI URL
+                        <span class="muted">
+                            (optional)
+                        </span>
+                    </label>
+
+                    <input
+                        id="openapiUrl"
+                        placeholder="http://127.0.0.1:8002/openapi.json"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Owner Identity
+                    </label>
+
+                    <input
+                        id="ownerIdentity"
+                        value="alice"
+                        placeholder="alice"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Test Identity
+                    </label>
+
+                    <input
+                        id="testIdentity"
+                        value="bob"
+                        placeholder="bob"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        Resource Seeds JSON
+                    </label>
+
+                    <textarea id="resourceSeeds">{
+  "/orders/{order_id}": "B204"
+}</textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <br>
+
+
+            <button
+                class="btn"
+                id="startScan"
+            >
+                Start Security Scan
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div
+            class="card section"
+            id="resultCard"
+            style="display:none;"
+        >
+
+            <div class="section-title">
+                Scan Result
+            </div>
+
+            <div id="scanResult"></div>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+
+<script>
+
+const startButton =
+    document.getElementById("startScan");
+
+const alertBox =
+    document.getElementById("scanAlert");
+
+
+function showAlert(message, type) {
+
+    alertBox.className =
+        `alert ${type}`;
+
+    alertBox.textContent =
+        message;
+
+}
+
+
+/* ==========================================
+   START SCAN
+========================================== */
+
+startButton.addEventListener(
+    "click",
+    async () => {
+
+        try {
+
+            startButton.disabled = true;
+
+            startButton.textContent =
+                "Scanning...";
+
+
+            showAlert(
+                "Starting authorized SentinelAPI scan...",
+                "success"
+            );
+
+
+            const target =
+                document
+                    .getElementById("target")
+                    .value
+                    .trim();
+
+
+            const ownerIdentity =
+                document
+                    .getElementById("ownerIdentity")
+                    .value
+                    .trim();
+
+
+            const testIdentity =
+                document
+                    .getElementById("testIdentity")
+                    .value
+                    .trim();
+
+
+            const openapiUrl =
+                document
+                    .getElementById("openapiUrl")
+                    .value
+                    .trim();
+
+
+            if (!target) {
+
+                throw new Error(
+                    "Target is required."
+                );
+
+            }
+
+
+            if (!ownerIdentity) {
+
+                throw new Error(
+                    "Owner identity is required."
+                );
+
+            }
+
+
+            if (!testIdentity) {
+
+                throw new Error(
+                    "Test identity is required."
+                );
+
+            }
+
+
+            /* ======================================
+               RESOURCE SEEDS
+            ====================================== */
+
+            let resourceSeeds = {};
+
+
+            try {
+
+                resourceSeeds =
+                    JSON.parse(
+                        document
+                            .getElementById(
+                                "resourceSeeds"
+                            )
+                            .value
+                    );
+
+            }
+
+            catch {
+
+                throw new Error(
+                    "Resource Seeds must contain valid JSON."
+                );
+
+            }
+
+
+            /* ======================================
+               FILE
+            ====================================== */
+
+            const file =
+                document
+                    .getElementById(
+                        "openapiFile"
+                    )
+                    .files[0];
+
+
+            /*
+             * Import OpenAPI file first.
+             */
+
+            if (file) {
+
+                showAlert(
+                    "Importing OpenAPI specification...",
+                    "success"
+                );
+
+
+                await importOpenAPI(
+                    file,
+                    target,
+                    ""
+                );
+
+            }
+
+
+            /* ======================================
+               SCAN
+            ====================================== */
+
+            showAlert(
+                "Running ML prioritization and safe agent scan...",
+                "success"
+            );
+
+
+            const result =
+                await startScan({
+
+                    target,
+
+                    ownerIdentity,
+
+                    testIdentity,
+
+                    resourceSeeds,
+
+                    openapiUrl
+
+                });
+
+
+            /* ======================================
+               RESULT
+            ====================================== */
+
+            document
+                .getElementById(
+                    "resultCard"
+                )
+                .style.display = "block";
+
+
+            document
+                .getElementById(
+                    "scanResult"
+                )
+                .innerHTML = `
+
+                    <div class="evidence-grid">
+
+                        <div class="identity">
+
+                            <div class="identity-title">
+                                Scan ID
+                            </div>
+
+                            <div class="status">
+                                #${escapeHTML(
+                                    result.scan_id
+                                )}
+                            </div>
+
+                        </div>
+
+
+                        <div class="identity">
+
+                            <div class="identity-title">
+                                Status
+                            </div>
+
+                            <div class="status success">
+                                ${escapeHTML(
+                                    result.status ||
+                                    "completed"
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <br>
+
+
+                    <p class="muted">
+
+                        ${escapeHTML(
+                            result.message ||
+                            "Security scan completed."
+                        )}
+
+                    </p>
+
+
+                    <br>
+
+
+                    <a
+                        class="btn"
+                        href="agent.html?scan=${result.scan_id}"
+                    >
+                        View Agent Trace
+                    </a>
+
+
+                    <a
+                        class="btn secondary"
+                        href="findings.html"
+                    >
+                        View Findings
+                    </a>
+
+                `;
+
+
+            showAlert(
+                "Security scan completed successfully.",
+                "success"
+            );
+
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+
+            showAlert(
+                error.message ||
+                "Scan failed.",
+                "error"
+            );
+
+        }
+
+
+        finally {
+
+            startButton.disabled =
+                false;
+
+            startButton.textContent =
+                "Start Security Scan";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

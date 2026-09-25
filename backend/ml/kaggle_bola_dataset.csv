@@ -1,0 +1,325 @@
+method_code,has_id,id_in_path,sensitive_resource,access_control,api_type,bola
+1,0,0,0,0,REST,0
+0,1,1,1,1,REST,0
+0,0,1,1,1,REST,0
+0,0,0,0,0,REST,0
+1,0,0,0,0,REST,0
+2,0,1,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+1,0,0,0,1,REST,0
+3,1,1,1,1,REST,1
+0,0,0,1,0,REST,0
+1,0,0,0,0,GraphQL,0
+1,0,0,0,0,GraphQL,0
+0,0,0,0,0,REST,0
+1,0,0,0,0,GraphQL,0
+0,0,1,0,0,REST,0
+1,0,0,0,1,REST,0
+0,0,1,0,1,REST,0
+0,0,0,0,0,REST,0
+0,0,1,1,0,REST,0
+1,0,0,0,0,REST,0
+1,0,1,0,1,GraphQL,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+1,0,0,0,0,REST,0
+1,0,1,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+0,0,0,1,1,REST,0
+4,1,1,1,1,REST,1
+1,0,1,1,0,REST,0
+0,0,0,0,0,REST,0
+1,0,0,1,0,GraphQL,0
+1,0,0,0,0,REST,0
+0,0,0,1,0,REST,0
+2,0,1,1,0,REST,0
+0,0,0,0,0,REST,0
+1,0,0,0,1,REST,0
+0,0,1,0,1,REST,0
+1,0,0,0,0,REST,0
+1,0,0,0,0,GraphQL,0
+1,0,0,0,0,REST,0
+0,1,1,0,1,REST,0
+4,0,1,0,1,REST,0
+0,0,0,0,0,REST,0
+0,0,1,0,0,REST,0
+3,0,1,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+1,0,0,0,0,REST,0
+0,1,1,1,1,REST,1
+0,0,0,1,0,REST,0
+1,0,1,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+1,0,1,0,0,REST,0
+0,0,0,0,0,REST,0
+2,0,0,0,0,REST,0
+1,0,0,1,0,REST,0
+0,1,1,0,1,REST,0
+1,0,0,0,1,REST,0
+1,0,0,0,0,REST,0
+1,0,0,0,0,GraphQL,0
+0,0,0,1,0,REST,0
+0,1,1,1,1,REST,1
+1,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,1,0,0,REST,0
+1,0,1,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+1,0,0,1,0,REST,0
+0,1,1,0,1,REST,0
+1,0,1,0,0,REST,0
+0,0,0,1,0,REST,0
+1,0,0,1,0,GraphQL,0
+0,0,1,1,0,REST,0
+0,0,0,0,0,REST,0
+2,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,1,REST,0
+1,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+1,0,1,0,0,GraphQL,0
+0,0,0,0,0,REST,0
+1,0,1,0,1,SOAP,0
+6,0,0,1,1,gRPC,0
+5,0,1,0,0,WebSocket,0
+1,0,0,0,0,SOAP,0
+6,0,0,1,0,gRPC,0
+0,0,0,0,0,REST,0
+1,0,0,0,0,GraphQL,0
+5,0,0,1,0,WebSocket,0
+1,0,0,0,1,SOAP,0
+6,0,0,0,0,gRPC,0
+1,0,1,0,0,REST,0
+1,0,0,0,0,GraphQL,0
+5,0,0,1,0,WebSocket,0
+0,0,0,0,0,SOAP,0
+2,0,1,1,0,REST,0
+6,0,0,1,0,gRPC,0
+5,1,1,1,1,WebSocket,1
+1,0,0,0,0,SOAP,0
+1,0,0,0,0,GraphQL,0
+0,0,0,0,0,REST,0
+6,0,0,0,0,gRPC,0
+0,0,0,0,0,WebSocket,0
+1,0,1,1,0,SOAP,0
+1,0,0,1,0,GraphQL,0
+0,1,1,0,1,REST,0
+6,0,1,0,1,gRPC,0
+5,0,1,0,0,WebSocket,0
+1,0,0,0,0,SOAP,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,GraphQL,0
+6,0,1,1,0,gRPC,0
+5,0,0,1,0,WebSocket,0
+1,0,1,1,1,SOAP,1
+1,0,0,0,0,REST,0
+6,0,0,1,0,gRPC,0
+1,0,0,0,0,GraphQL,0
+5,0,0,1,0,WebSocket,0
+1,0,0,0,0,SOAP,0
+2,0,0,0,0,REST,0
+6,0,1,1,0,gRPC,0
+5,0,0,0,1,WebSocket,0
+1,0,1,0,1,SOAP,0
+1,0,0,0,0,REST,0
+6,0,0,0,0,gRPC,0
+1,0,0,1,0,GraphQL,0
+5,0,0,0,0,WebSocket,0
+1,0,0,0,0,SOAP,0
+0,0,0,1,0,REST,0
+6,0,0,1,1,gRPC,1
+5,0,0,0,1,WebSocket,0
+1,0,0,0,0,GraphQL,0
+1,0,0,0,0,SOAP,0
+0,0,0,0,1,REST,0
+0,0,0,0,0,gRPC,0
+5,0,0,0,0,WebSocket,0
+1,0,0,1,0,GraphQL,0
+1,0,1,1,1,SOAP,0
+1,0,1,1,0,REST,0
+6,0,0,1,0,gRPC,0
+5,0,0,0,0,WebSocket,0
+1,0,0,1,0,GraphQL,0
+1,0,0,0,0,SOAP,0
+2,0,0,0,0,REST,0
+6,0,0,1,0,gRPC,0
+5,1,1,1,1,WebSocket,1
+1,0,0,0,1,SOAP,0
+0,0,1,0,0,REST,0
+6,0,0,0,0,gRPC,0
+5,0,1,0,0,WebSocket,0
+0,0,0,0,0,GraphQL,0
+0,1,1,1,1,Partner APIs,0
+1,0,0,0,0,Composite APIs,0
+0,0,1,1,0,Public APIs,0
+1,0,0,0,0,Internal APIs,0
+0,0,0,0,1,Private APIs,0
+0,0,0,0,0,REST APIs,0
+1,0,0,0,0,JSON-RPC,0
+1,0,1,1,0,SOAP APIs,0
+1,0,0,0,1,GraphQL,1
+0,0,1,0,1,Open APIs,0
+0,0,1,0,0,REST,0
+1,0,0,0,0,Soap,0
+0,0,0,1,0,Partner APIs,0
+0,0,0,0,0,Composite APIs,0
+1,0,1,1,0,Public APIs,0
+0,0,0,1,0,Internal APIs,0
+1,0,0,0,1,Private APIs,0
+1,0,0,0,0,JSON-RPC,0
+1,0,0,0,0,SOAP APIs,0
+1,0,0,0,0,GraphQL,0
+0,0,0,1,1,Open APIs,0
+0,0,0,0,0,REST,0
+1,0,1,1,0,Soap,0
+0,0,0,1,0,Partner APIs,0
+1,0,0,0,1,Composite APIs,1
+0,0,1,0,1,Public APIs,0
+1,0,1,0,0,Internal APIs,0
+0,0,0,0,0,Private APIs,0
+1,0,0,1,0,JSON-RPC,0
+0,0,0,0,0,SOAP APIs,0
+1,0,0,0,0,GraphQL,0
+0,0,1,1,0,Open APIs,0
+0,0,0,0,1,REST,0
+1,0,0,0,0,Soap,0
+1,0,1,0,0,Partner APIs,0
+1,0,0,0,0,Composite APIs,0
+0,0,0,1,0,Public APIs,0
+0,0,0,0,0,Internal APIs,0
+1,0,0,0,0,Private APIs,0
+1,0,0,1,0,JSON-RPC,0
+1,0,1,1,1,SOAP APIs,1
+1,0,1,0,1,GraphQL,0
+0,0,1,1,0,Open APIs,0
+0,0,0,0,0,REST,0
+1,0,0,0,1,Soap,0
+0,0,0,0,0,Partner APIs,0
+1,0,0,0,0,Composite APIs,0
+0,0,1,1,0,Public APIs,0
+1,0,0,0,1,Internal APIs,0
+0,0,0,1,0,Private APIs,0
+1,0,1,0,0,JSON-RPC,0
+1,0,0,0,0,SOAP APIs,0
+1,0,0,1,0,GraphQL,0
+0,0,0,0,0,Open APIs,0
+2,0,1,1,0,REST,0
+1,0,0,1,0,Soap,0
+0,1,1,1,1,Partner APIs,1
+1,0,0,0,1,Composite APIs,0
+1,0,1,0,0,Public APIs,0
+1,0,0,0,0,Internal APIs,0
+0,0,0,0,0,Private APIs,0
+0,0,0,0,0,JSON-RPC,0
+1,0,0,0,0,SOAP APIs,0
+1,0,0,1,0,GraphQL,0
+0,0,0,0,1,Open APIs,0
+1,0,1,1,0,REST,0
+1,0,0,0,0,Soap,0
+1,0,0,0,0,Partner APIs,0
+1,0,0,1,0,Composite APIs,0
+0,0,0,0,0,Public APIs,0
+1,0,0,0,1,Partner APIs,0
+1,1,1,0,1,Composite APIs,0
+1,0,0,0,0,Public APIs,0
+0,0,0,0,0,Internal APIs,0
+0,0,0,1,0,Private APIs,0
+0,0,0,0,0,REST APIs,0
+1,0,0,0,0,JSON-RPC,0
+1,0,0,1,0,SOAP APIs,0
+1,0,0,1,0,GraphQL,0
+0,0,1,0,0,Open APIs,0
+1,0,1,0,0,REST,0
+1,0,0,0,0,Soap,0
+1,0,0,0,0,Partner APIs,0
+0,0,0,0,0,Composite APIs,0
+0,0,0,1,0,Public APIs,0
+1,0,0,0,1,Internal APIs,0
+0,0,1,0,0,Private APIs,0
+1,0,0,0,0,JSON-RPC,0
+1,0,0,0,0,SOAP APIs,0
+1,0,0,0,0,GraphQL,0
+0,0,0,0,0,Open APIs,0
+0,0,0,0,1,REST,0
+0,0,0,1,0,Soap,0
+6,0,0,0,1,gRPC,0
+5,0,0,1,0,WebSocket,0
+0,0,0,0,1,Partner APIs,0
+1,0,0,0,0,Composite APIs,0
+0,0,0,1,0,Public APIs,0
+1,0,0,0,0,Internal APIs,0
+0,0,0,0,0,Private APIs,0
+1,0,0,0,0,JSON-RPC,0
+1,0,0,0,0,SOAP APIs,0
+1,0,0,0,0,GraphQL,0
+1,0,0,0,0,Open APIs,0
+0,0,1,0,1,REST,0
+1,0,0,1,0,Soap,0
+6,0,0,1,0,gRPC,0
+5,0,1,1,1,WebSocket,0
+0,0,1,0,1,Partner APIs,0
+1,0,0,0,1,Composite APIs,0
+1,0,0,0,0,Public APIs,0
+1,0,1,0,0,Internal APIs,0
+0,0,0,1,0,Private APIs,0
+0,0,0,0,0,JSON-RPC,0
+1,0,0,1,0,SOAP APIs,0
+1,0,0,0,1,GraphQL,0
+1,0,1,1,0,Open APIs,0
+1,0,0,0,0,REST,0
+1,0,0,0,1,Soap,0
+6,0,1,1,0,gRPC,0
+5,0,0,1,0,WebSocket,0
+1,0,0,0,1,Partner APIs,0
+1,0,0,0,1,Composite APIs,0
+0,0,1,0,0,Public APIs,0
+0,0,0,1,0,Internal APIs,0
+1,0,0,0,1,Private APIs,0
+1,0,1,0,1,JSON-RPC,0
+1,0,0,1,0,SOAP APIs,0
+1,0,0,0,0,GraphQL,0
+1,0,0,0,0,Open APIs,0
+0,0,1,0,1,REST,0
+1,0,0,0,0,Soap,0
+6,0,0,0,1,gRPC,0
+5,0,0,1,0,WebSocket,0
+1,0,0,0,0,Partner APIs,0
+1,0,0,0,0,Composite APIs,0
+0,0,0,0,0,Public APIs,0
+0,0,0,0,0,Internal APIs,0
+1,0,0,0,0,Private APIs,0
+1,0,0,0,1,JSON-RPC,0
+1,0,0,1,0,SOAP APIs,0
+1,0,0,0,1,GraphQL,0
+1,0,0,0,0,Open APIs,0
+0,0,0,1,0,REST,0
+1,0,1,1,0,Soap,0
+6,0,0,1,0,gRPC,0
+5,0,1,1,1,WebSocket,0
+1,0,1,0,0,Partner APIs,0
+1,0,0,1,0,Composite APIs,0
+0,0,0,0,0,Public APIs,0
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,0,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,1,1,REST,1
+0,1,1,0,1,REST,1
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,0,0,0,0,REST,0
+0,1,1,0,0,REST,0
+0,1,1,0,0,REST,0
+0,1,1,0,0,REST,0

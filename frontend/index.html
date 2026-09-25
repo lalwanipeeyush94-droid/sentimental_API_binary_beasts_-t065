@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SentinelAPI | Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            Sentinel<span>API</span>
+        </div>
+
+        <nav class="nav">
+
+            <a href="index.html">Dashboard</a>
+
+            <a href="new-scan.html">New Scan</a>
+
+            <a href="findings.html">Findings</a>
+
+            <a href="evidence.html">Evidence</a>
+
+            <a href="agent.html">Agent Trace</a>
+
+            <a href="reports.html">Reports</a>
+
+        </nav>
+
+    </aside>
+
+    <main class="main">
+
+        <div class="mobile-header">
+
+            <strong>SentinelAPI</strong>
+
+            <button class="mobile-menu">
+                ☰
+            </button>
+
+        </div>
+
+        <div class="topbar">
+
+            <div>
+
+                <div class="page-title">
+                    Security Dashboard
+                </div>
+
+                <div class="page-subtitle">
+                    Zero-Trust API vulnerability monitoring
+                </div>
+
+            </div>
+
+            <a href="new-scan.html" class="btn">
+                + New Scan
+            </a>
+
+        </div>
+
+        <div id="dashboardAlert" class="alert"></div>
+
+        <section class="grid stats">
+
+            <div class="card">
+
+                <div class="stat-title">
+                    Total Scans
+                </div>
+
+                <div id="totalScans" class="stat-value">
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Stored security scans
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="stat-title">
+                    Endpoints
+                </div>
+
+                <div id="totalEndpoints" class="stat-value">
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Discovered API endpoints
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="stat-title">
+                    Findings
+                </div>
+
+                <div id="totalFindings" class="stat-value">
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Verified findings
+                </div>
+
+            </div>
+
+            <div class="card">
+
+                <div class="stat-title">
+                    Probes
+                </div>
+
+                <div id="totalProbes" class="stat-value">
+                    —
+                </div>
+
+                <div class="stat-description">
+                    Authorization probes
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="section">
+
+            <div class="section-title">
+                Recent Scans
+            </div>
+
+            <div class="card">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Target</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Action</th>
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="scanTable">
+
+                        <tr>
+                            <td colspan="5" class="loading">
+                                Loading scans...
+                            </td>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+<script>
+
+async function loadDashboard() {
+
+    try {
+
+        const [
+            scansData,
+            endpointsData,
+            findingsData,
+            probesData
+        ] = await Promise.all([
+            getScans(),
+            getEndpoints(),
+            getFindings(),
+            getProbes()
+        ]);
+
+        const scans = getArray(scansData);
+        const endpoints = getArray(endpointsData);
+        const findings = getArray(findingsData);
+        const probes = getArray(probesData);
+
+        document.getElementById("totalScans").textContent =
+            scans.length;
+
+        document.getElementById("totalEndpoints").textContent =
+            endpoints.length;
+
+        document.getElementById("totalFindings").textContent =
+            findings.length;
+
+        document.getElementById("totalProbes").textContent =
+            probes.length;
+
+        const table = document.getElementById("scanTable");
+
+        if (!scans.length) {
+
+            table.innerHTML = `
+                <tr>
+                    <td colspan="5" class="empty">
+                        No scans found. Start your first scan.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        table.innerHTML = scans
+            .slice()
+            .reverse()
+            .slice(0, 10)
+            .map(scan => {
+
+                const status = scan.status || "unknown";
+
+                return `
+                    <tr>
+
+                        <td>#${escapeHTML(scan.id)}</td>
+
+                        <td>
+                            ${escapeHTML(scan.target || "—")}
+                        </td>
+
+                        <td>
+                            <span class="badge ${
+                                status === "completed"
+                                    ? "confirmed"
+                                    : status === "failed"
+                                        ? "high"
+                                        : "medium"
+                            }">
+                                ${escapeHTML(status)}
+                            </span>
+                        </td>
+
+                        <td>
+                            ${formatDate(scan.created_at)}
+                        </td>
+
+                        <td>
+                            <a
+                                class="btn secondary"
+                                href="agent.html?scan=${scan.id}"
+                            >
+                                View
+                            </a>
+                        </td>
+
+                    </tr>
+                `;
+
+            })
+            .join("");
+
+    } catch (error) {
+
+        const alert = document.getElementById("dashboardAlert");
+
+        alert.className = "alert error";
+
+        alert.textContent =
+            `Backend connection failed: ${error.message}`;
+
+    }
+
+}
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>
